@@ -6,23 +6,33 @@ public class ServisnaKnjizica {
 	private ArrayList<Servis> listaServisa;
 	private String sifreServisa;
 	private String id;
+	private String obrisan = "ne";
 	
 	
 	// konstruktori
 	public ServisnaKnjizica() {};
-	public ServisnaKnjizica(Automobil automobil, ArrayList<Servis> listaServisa, String id) {
+	public ServisnaKnjizica(Automobil automobil, ArrayList<Servis> listaServisa, String id, String obrisan) {
 		this.automobil = automobil;
 		this.listaServisa = listaServisa;
 		this.id = id;
+		this.obrisan = obrisan;
 	}
 	public ServisnaKnjizica(ServisnaKnjizica servisnaKnjizica) {
 		this.automobil = servisnaKnjizica.automobil;
 		this.listaServisa = servisnaKnjizica.listaServisa;
 		this.id = servisnaKnjizica.id;
+		this.obrisan = servisnaKnjizica.obrisan;
 	}
 	
 	
 	
+	//
+	public String getObrisan() {
+		return obrisan;
+	}
+	public void setObrisan(String obrisan) {
+		this.obrisan = obrisan;
+	}
 	//
 	public String getSifreServisa() {
 		sifreServisa = "";
@@ -61,6 +71,6 @@ public class ServisnaKnjizica {
 	
 	@Override
 	public String toString() {
-		return this.automobil.getId()+","+this.getSifreServisa()+","+this.id;
+		return this.automobil.getId()+","+this.getSifreServisa()+","+this.id+","+this.obrisan;
 	}
 }

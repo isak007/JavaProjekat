@@ -8,15 +8,17 @@ public class ServisniDeo {
 	private String naziv;
 	private double cena;
 	private String id;
+	private String obrisan = "ne";
 	
 	// konstruktori
 	public ServisniDeo() {};
-	public ServisniDeo(Marka marka, Model model, String naziv, double cena, String id) {
+	public ServisniDeo(Marka marka, Model model, String naziv, double cena, String id, String obrisan) {
 		this.marka = marka;
 		this.model = model;
 		this.naziv = naziv;
 		this.cena = cena;
 		this.id = id;
+		this.obrisan = obrisan;
 	}
 	public ServisniDeo(ServisniDeo servisniDeo) {
 		this.marka = servisniDeo.marka;
@@ -24,9 +26,17 @@ public class ServisniDeo {
 		this.naziv = servisniDeo.naziv;
 		this.cena = servisniDeo.cena;
 		this.id = servisniDeo.id;
+		this.obrisan = servisniDeo.obrisan;
 	}
 	
 	
+	//
+	public String getObrisan() {
+		return obrisan;
+	}
+	public void setObrisan(String obrisan) {
+		this.obrisan = obrisan;
+	}
 	//
 	public Marka getMarka() {
 		return marka;
@@ -65,6 +75,6 @@ public class ServisniDeo {
 	
 	@Override
 	public String toString() {
-		return this.marka.toString()+","+this.model.toString()+","+this.naziv+","+this.cena+","+this.id;
+		return this.marka.toString()+","+this.model.toString()+","+this.naziv+","+this.cena+","+this.id+","+this.obrisan;
 	}
 }

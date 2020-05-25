@@ -10,6 +10,7 @@ public class Administrator extends Korisnik {
 	private String id;
 	private double plata;
 	private static ArrayList<Automobil> listaAutomobila = new ArrayList<Automobil>();
+	private static ArrayList<String> listaRezervacija = new ArrayList<String>();
 	private static ArrayList<Servis> listaSvihServisa = new ArrayList<Servis>();
 	private static ArrayList<Musterija> listaMusterija = new ArrayList<Musterija>();
 	private static ArrayList<Serviser> listaServisera = new ArrayList<Serviser>();
@@ -22,8 +23,8 @@ public class Administrator extends Korisnik {
 	// konstruktori
 	public Administrator() {};
 	public Administrator(String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona, 
-			String korisnickoIme, String lozinka, Uloga uloga, String id, double plata) {
-		super(ime, prezime, jmbg, pol, adresa, brojTelefona, korisnickoIme, lozinka, uloga);
+			String korisnickoIme, String lozinka, Uloga uloga, String id, double plata, String obrisan) {
+		super(ime, prezime, jmbg, pol, adresa, brojTelefona, korisnickoIme, lozinka, uloga, obrisan);
 		this.id = id;
 		this.plata = plata;
 	}
@@ -34,6 +35,14 @@ public class Administrator extends Korisnik {
 	
 	
 
+	
+	//
+	public static ArrayList<String> getListaRezervacija() {
+		return listaRezervacija;
+	}
+	public static void setListaRezervacija(ArrayList<String> listaRezervacija) {
+		Administrator.listaRezervacija = listaRezervacija;
+	}
 	//
 	public static HashMap<Marka, ArrayList<Model>> getMarkeModeli() {
 		return markeModeli;
@@ -109,6 +118,6 @@ public class Administrator extends Korisnik {
 	@Override
 	public String toString() {
 		return this.ime+","+this.prezime+","+this.jmbg +","+this.pol+","+this.adresa+","+this.brojTelefona+
-				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.id+","+this.plata;
+				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.id+","+this.plata+","+this.obrisan;
 	}
 }

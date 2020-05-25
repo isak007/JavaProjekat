@@ -13,11 +13,12 @@ public abstract class Korisnik {
 	protected String korisinickoIme;
 	protected String lozinka;
 	protected Uloga uloga;
+	protected String obrisan = "ne";
 	
 	// konstruktori
 	public Korisnik() {};
 	public Korisnik(String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona,
-			String korisnickoIme, String lozinka, Uloga uloga) {
+			String korisnickoIme, String lozinka, Uloga uloga, String obrisan) {
 		this.ime = ime;
 		this.prezime = prezime;
 		this.jmbg = jmbg;
@@ -27,6 +28,7 @@ public abstract class Korisnik {
 		this.korisinickoIme = korisnickoIme;
 		this.lozinka = lozinka;
 		this.uloga = uloga;
+		this.obrisan = obrisan;
 	}
 	public Korisnik(Korisnik korisnik) {
 		this.ime = korisnik.ime;
@@ -38,6 +40,7 @@ public abstract class Korisnik {
 		this.korisinickoIme = korisnik.korisinickoIme;
 		this.lozinka = korisnik.lozinka;
 		this.uloga = korisnik.uloga;
+		this.obrisan = korisnik.obrisan;
 	}
 	
 	//
@@ -111,5 +114,13 @@ public abstract class Korisnik {
 	public void setUloga(Uloga uloga) {
 		this.uloga = uloga;
 	}
+	//
+	public String getObrisan() {
+		return obrisan;
+	}
+	public void setObrisan(String obrisan) {
+		this.obrisan = obrisan;
+	}
+	
 	
 }

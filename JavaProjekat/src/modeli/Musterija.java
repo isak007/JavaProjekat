@@ -15,8 +15,8 @@ public class Musterija extends Korisnik {
 	// konstruktori
 	public Musterija() {};
 	public Musterija(String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona, 
-			String korisnickoIme, String lozinka, Uloga uloga, String id, int brojSakupljenihBodova) {
-		super(ime, prezime, jmbg, pol, adresa, brojTelefona, korisnickoIme, lozinka, uloga);
+			String korisnickoIme, String lozinka, Uloga uloga, String id, int brojSakupljenihBodova, String obrisan) {
+		super(ime, prezime, jmbg, pol, adresa, brojTelefona, korisnickoIme, lozinka, uloga, obrisan);
 		this.id = id;
 		this.brojSakupljenihBodova = brojSakupljenihBodova;
 	}
@@ -74,7 +74,7 @@ public class Musterija extends Korisnik {
 	@Override
 	public String toString() {
 		return this.ime+","+this.prezime+","+this.jmbg +","+this.pol+","+this.adresa+","+this.brojTelefona+
-				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.id+","+this.brojSakupljenihBodova;
+				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.id+","+this.brojSakupljenihBodova+","+this.obrisan;
 	}
 	
 }

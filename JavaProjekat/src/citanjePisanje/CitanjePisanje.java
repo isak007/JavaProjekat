@@ -1,7 +1,6 @@
 package citanjePisanje;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class CitanjePisanje {
 	public CitanjePisanje() {};
@@ -16,7 +15,6 @@ public class CitanjePisanje {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
-		//skener.close();
 	}
 	
 	public void pisanjeUfajl(String sadrzaj, String fajl) {

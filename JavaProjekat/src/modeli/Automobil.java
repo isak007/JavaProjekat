@@ -13,11 +13,12 @@ public class Automobil {
 	private int snagaMotora;
 	private Gorivo gorivo;
 	private String id;
+	private String obrisan = "ne";
 	
 	// konstruktori
 	public Automobil() {};
 	public Automobil(Musterija vlasnik, Marka marka, Model model, int godinaProizvodnje,
-			double zapreminaMotora, int snagaMotora, Gorivo gorivo, String id) {
+			double zapreminaMotora, int snagaMotora, Gorivo gorivo, String id, String obrisan) {
 		this.vlasnik = vlasnik;
 		this.marka = marka;
 		this.model = model;
@@ -26,6 +27,7 @@ public class Automobil {
 		this.snagaMotora = snagaMotora;
 		this.gorivo = gorivo;
 		this.id = id;
+		this.obrisan = obrisan;
 	}
 	public Automobil(Automobil automobil) {
 		this.vlasnik = automobil.vlasnik;
@@ -36,9 +38,17 @@ public class Automobil {
 		this.snagaMotora = automobil.snagaMotora;
 		this.gorivo = automobil.gorivo;
 		this.id = automobil.id;
+		this.obrisan = automobil.obrisan;
 	}
 	
 	
+	//
+	public String getObrisan() {
+		return obrisan;
+	}
+	public void setObrisan(String obrisan) {
+		this.obrisan = obrisan;
+	}
 	//
 	public Marka getMarka() {
 		return marka;
@@ -100,6 +110,6 @@ public class Automobil {
 	@Override
 	public String toString() {
 		return this.vlasnik.getId()+","+this.marka.toString()+","+this.model.toString()+","+
-				this.godinaProizvodnje+","+this.zapreminaMotora+","+this.snagaMotora+","+this.gorivo.toString()+","+this.id;
+				this.godinaProizvodnje+","+this.zapreminaMotora+","+this.snagaMotora+","+this.gorivo.toString()+","+this.id+","+this.obrisan;
 	}
 }

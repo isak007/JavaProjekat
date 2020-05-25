@@ -1,10 +1,8 @@
 package aplikacija;
-import klaseUI.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import modeli.*;
-import java.util.Scanner;
 
 import enumeracije.Gorivo;
 import enumeracije.Marka;
@@ -21,161 +19,13 @@ public class Main {
 		inicijalizacijaObjekata();
 		inicijalizacijaMarkiModela();
 		
-		Scanner skener = new Scanner(System.in);
-		String userInput = "";
-		String korisnickoIme;
-		String lozinka;
-		while (true) {
-			System.out.println("1. Musterija");
-			System.out.println("2. Serviser");
-			System.out.println("3. Administrator");
-			System.out.println("4. IZLAZ iz aplikacije");
-			System.out.print("> ");
-			userInput = skener.nextLine();
-			
-			if (userInput.equals("1")) {
-				System.out.print("Unesite korisnicko ime: ");
-				korisnickoIme = skener.nextLine();
-				System.out.print("Unesite lozinku: ");
-				lozinka = skener.nextLine();
-				if (prijava(korisnickoIme,lozinka,userInput)) {
-					ArrayList<Musterija> listaMusterija = Administrator.getListaMusterija();
-					Musterija musterija = null;
-					for (int i = 0; i < listaMusterija.size(); i++) {
-						if (listaMusterija.get(i).getKorisinickoIme().equals(korisnickoIme) &&
-								listaMusterija.get(i).getLozinka().equals(lozinka)) {
-							musterija = listaMusterija.get(i);
-							break;
-						}
-					}
-					// musterijaUI
-					MusterijaUI musterijaUI = new MusterijaUI(musterija);
-
-				}
-				else {
-					System.out.println("Neispravno korisnicko ime ili lozinka!");
-				}
-				
-			}
-			
-			
-			else if (userInput.equals("2")) {
-				System.out.print("Unesite korisnicko ime: ");
-				korisnickoIme = skener.nextLine();
-				System.out.print("Unesite lozinku: ");
-				lozinka = skener.nextLine();
-				if (prijava(korisnickoIme,lozinka,userInput)) {
-					ArrayList<Serviser> listaServisera = Administrator.getListaServisera();
-					Serviser serviser = null;
-					for (int i = 0; i < listaServisera.size(); i++) {
-						if (listaServisera.get(i).getKorisinickoIme().equals(korisnickoIme) &&
-								listaServisera.get(i).getLozinka().equals(lozinka)) {
-							serviser = listaServisera.get(i);
-							break;
-						}
-					}
-					// seviserUI
-					ServiserUI serviserUI = new ServiserUI(serviser);
-				}
-				else {
-					System.out.println("Neispravno korisnicko ime ili lozinka!");
-				}
-				
-			}
-			
-			
-			else if (userInput.equals("3")) {
-				System.out.print("Unesite korisnicko ime: ");
-				korisnickoIme = skener.nextLine();
-				System.out.print("Unesite lozinku: ");
-				lozinka = skener.nextLine();
-				if (prijava(korisnickoIme,lozinka,userInput)) {
-					ArrayList<Administrator> listaAdministratora = Administrator.getListaAdministratora();
-					Administrator admin = null;
-					for (int i = 0; i < listaAdministratora.size(); i++) {
-						if (listaAdministratora.get(i).getKorisinickoIme().equals(korisnickoIme) &&
-								listaAdministratora.get(i).getLozinka().equals(lozinka)) {
-							admin = listaAdministratora.get(i);
-							break;
-						}
-					}
-					// adminUI
-					AdminUI adminUI = new AdminUI(admin);
-				}
-				else {
-					System.out.println("Neispravno korisnicko ime ili lozinka!");
-				}
-				
-			}
-
-			
-			else if (userInput.equals("4")) {
-				break;
-			}
-			
-			
-			else {
-				System.out.println("Unesite validnu opciju!");
-			}
-		}
-		skener.close();
-	}
-	
-	public static boolean prijava(String korisnickoIme, String lozinka, String uloga) {
+		// TEST
 		
-		// musterija
-		if (uloga.equals("1")) {
-			ArrayList<Musterija> listaMusterija = Administrator.getListaMusterija();
-			if (listaMusterija.size() > 0) {
-				for (int i = 0; i < listaMusterija.size(); i++) {
-					if (listaMusterija.get(i).getKorisinickoIme().equals(korisnickoIme) &&
-							listaMusterija.get(i).getLozinka().equals(lozinka)) {
-						return true;
-					}
-				}
-				return false;
-			}
-			else {
-				return false;
-			}
-		}
 		
-		// serviser
-		else if (uloga.equals("2")) {
-			ArrayList<Serviser> listaServisera = Administrator.getListaServisera();
-			if (listaServisera.size() > 0) {
-				for (int i = 0; i < listaServisera.size(); i++) {
-					if (listaServisera.get(i).getKorisinickoIme().equals(korisnickoIme) &&
-							listaServisera.get(i).getLozinka().equals(lozinka)) {
-						return true;
-					}
-				}
-				return false;
-			}
-			else {
-				return false;
-			}
-		}
 		
-		// admin
-		else {
-			ArrayList<Administrator> listaAdmina = Administrator.getListaAdministratora();
-			if (listaAdmina.size() > 0) {
-				for (int i = 0; i < listaAdmina.size(); i++) {
-					if (listaAdmina.get(i).getKorisinickoIme().equals(korisnickoIme) &&
-							listaAdmina.get(i).getLozinka().equals(lozinka)) {
-						return true;
-					}
-				}
-				return false;
-			}
-			else {
-				return false;
-			}
-		}
+		
 		
 	}
-	
 	
 	public static void inicijalizacijaMarkiModela() {
 		HashMap<Marka, ArrayList<Model>> markeModeli = new HashMap<Marka, ArrayList<Model>>();
@@ -204,7 +54,7 @@ public class Main {
 			ArrayList<Administrator> listaAdmina = Administrator.getListaAdministratora();
 			String [] adminString;
 			Administrator admin;
-			String ime, prezime, jmbg, adresa, brojTelefona, korisnickoIme, lozinka, id, polString, ulogaString;
+			String ime, prezime, jmbg, adresa, brojTelefona, korisnickoIme, lozinka, id, polString, ulogaString, obrisan;
 			Pol pol;
 			Uloga uloga;
 			double plata;
@@ -223,6 +73,7 @@ public class Main {
 				ulogaString = adminString[8];
 				id = adminString[9];
 				plata = Double.parseDouble(adminString[10]);
+				obrisan = adminString[11];
 				
 				// postavljanje pola
 				if (Pol.values()[0].toString().equals(polString)) {
@@ -245,7 +96,7 @@ public class Main {
 				
 				// kreiranje Administrator objekta i dodavanje listi administratora
 				// ime,prezime,jmbg,pol,adresa,br.tel.,kor.ime,lozinka,uloga,id,plata
-				admin = new Administrator(ime,prezime,jmbg,pol,adresa,brojTelefona,korisnickoIme,lozinka,uloga,id,plata);
+				admin = new Administrator(ime,prezime,jmbg,pol,adresa,brojTelefona,korisnickoIme,lozinka,uloga,id,plata,obrisan);
 				listaAdmina.add(admin);
 				Administrator.setListaAdministratora(listaAdmina);
 				
@@ -259,7 +110,7 @@ public class Main {
 			String [] serviserString;
 			Serviser serviser;
 			String ime, prezime, jmbg, adresa, brojTelefona, korisnickoIme, lozinka, id,
-			polString, ulogaString, specijalizacijaString;
+			polString, ulogaString, specijalizacijaString, obrisan;
 			Pol pol;
 			Uloga uloga;
 			double plata;
@@ -280,6 +131,7 @@ public class Main {
 				id = serviserString[9];
 				plata = Double.parseDouble(serviserString[10]);
 				specijalizacijaString = serviserString[11];
+				obrisan = serviserString[12];
 				
 				// postavljanje POLA
 				if (Pol.values()[0].toString().equals(polString)) {
@@ -318,7 +170,7 @@ public class Main {
 				// kreiranje Administrator objekta i dodavanje listi administratora
 				// ime,prezime,jmbg,pol,adresa,br.tel.,kor.ime,lozinka,uloga,id,plata
 				serviser = new Serviser(ime,prezime,jmbg,pol,adresa,brojTelefona,korisnickoIme,lozinka,
-						uloga,id,plata,specijalizacija);
+						uloga,id,plata,specijalizacija,obrisan);
 				listaServisera.add(serviser);
 				Administrator.setListaServisera(listaServisera);
 				
@@ -332,7 +184,7 @@ public class Main {
 			String [] musterijaString;
 			Musterija musterija;
 			String ime, prezime, jmbg, adresa, brojTelefona, korisnickoIme, lozinka, id, 
-			polString, ulogaString;
+			polString, ulogaString, obrisan;
 			Pol pol;
 			Uloga uloga;
 			int brojSakupljenihBodova;
@@ -351,6 +203,7 @@ public class Main {
 				ulogaString = musterijaString[8];
 				id = musterijaString[9];
 				brojSakupljenihBodova = Integer.parseInt(musterijaString[10]);
+				obrisan = musterijaString[11];
 				
 				// postavljanje pola
 				if (Pol.values()[0].toString().equals(polString)) {
@@ -374,7 +227,7 @@ public class Main {
 				// kreiranje Administrator objekta i dodavanje listi administratora
 				// ime,prezime,jmbg,pol,adresa,br.tel.,kor.ime,lozinka,uloga,id,plata
 				musterija = new Musterija(ime,prezime,jmbg,pol,adresa,brojTelefona,korisnickoIme,lozinka,
-						uloga,id,brojSakupljenihBodova);
+						uloga,id,brojSakupljenihBodova,obrisan);
 				listaMusterija.add(musterija);
 				Administrator.setListaMusterija(listaMusterija);
 				
@@ -389,7 +242,7 @@ public class Main {
 			Marka [] listaMarki = Marka.values();
 			Model [] listaModela = Model.values();
 			
-			String vlasnikString,markaString,modelString,gorivoString,id;
+			String vlasnikString,markaString,modelString,gorivoString,id,obrisan;
 			//
 			Musterija vlasnik = null;
 			//
@@ -415,6 +268,7 @@ public class Main {
 				snagaMotora = Integer.parseInt(automobilString[5]);
 				gorivoString = automobilString[6];
 				id = automobilString[7];
+				obrisan = automobilString[8];
 				
 				// pronalazenje vlasnika
 				for (int j = 0; j < listaMusterija.size(); j++) {
@@ -448,7 +302,7 @@ public class Main {
 				
 				// kreiranje Automobil objekata
 				Automobil automobil = new Automobil(vlasnik,marka,model,godinaProizvodnje,zapreminaMotora,
-						snagaMotora,gorivo,id);
+						snagaMotora,gorivo,id,obrisan);
 				// dodavanje automobila odredjenoj musteriji
 				ArrayList<Automobil> listaOdredjenihAutomobila = vlasnik.getListaAutomobila();
 				listaOdredjenihAutomobila.add(automobil);
@@ -475,7 +329,7 @@ public class Main {
 			String[] listaSifara;
 			ArrayList<ServisniDeo> listaDelova = new ArrayList<ServisniDeo>();
 			StatusServisa statusServisa = null;
-			String id;
+			String id, obrisan;
 			double cena;
 			
 			ArrayList<Automobil> listaAutomobila = Administrator.getListaAutomobila();
@@ -495,6 +349,7 @@ public class Main {
 				id = servisString[6];
 				cena = Double.parseDouble(servisString[7]);
 				namiren = servisString[8];
+				obrisan = servisString[9];
 				
 				// pronalazenje automobila
 				for (int j = 0; j < listaAutomobila.size(); j++) {
@@ -534,7 +389,7 @@ public class Main {
 				
 				
 				// kreiranje objekata
-				Servis servis = new Servis(automobil,serviser,termin,opis,listaDelova,statusServisa,id,cena,namiren);
+				Servis servis = new Servis(automobil,serviser,termin,opis,listaDelova,statusServisa,id,cena,namiren,obrisan);
 				// dodavanje servisa musteriji
 				ArrayList<Servis> listaMServisa = automobil.getVlasnik().getListaSvihServisa();
 				listaMServisa.add(servis);
@@ -569,7 +424,7 @@ public class Main {
 			ArrayList<Servis> listaServisa = new ArrayList<Servis>();
 			ArrayList<Servis> listaSvihServisa = Administrator.getListaSvihServisa();
 			ArrayList<Automobil> listaAutomobila = Administrator.getListaAutomobila();
-			String automobilString, sifreServisa, id;
+			String automobilString, sifreServisa, id, obrisan;
 			String [] listaSifara;
 			String[] servisnaKnjizicaString;
 
@@ -578,6 +433,7 @@ public class Main {
 				automobilString = servisnaKnjizicaString[0];
 				sifreServisa = servisnaKnjizicaString[1];
 				id = servisnaKnjizicaString[2];
+				obrisan = servisnaKnjizicaString[3];
 				
 				// pronalazenje automobila
 				for (int j = 0; j < listaAutomobila.size(); j++) {
@@ -599,7 +455,7 @@ public class Main {
 				}
 				
 				// kreiranje objekata
-				ServisnaKnjizica servisnaKnjizica = new ServisnaKnjizica(automobil,listaServisa,id);
+				ServisnaKnjizica servisnaKnjizica = new ServisnaKnjizica(automobil,listaServisa,id,obrisan);
 				// dodavanje servisne knjizice u listi servisnih knjizica
 				ArrayList<ServisnaKnjizica> listaServisnihKnjizica = Administrator.getListaServisnihKnjizica();
 				listaServisnihKnjizica.add(servisnaKnjizica);
@@ -617,7 +473,7 @@ public class Main {
 			Model[] listaModela = Model.values();
 			Marka marka = null;
 			Model model = null;
-			String markaString,modelString,naziv,id;
+			String markaString,modelString,naziv,id,obrisan;
 			double cena;
 			String [] servisniDeoString;
 			// marka,model,naziv,cena,id
@@ -628,7 +484,7 @@ public class Main {
 				naziv = servisniDeoString[2];
 				cena = Double.parseDouble(servisniDeoString[3]);
 				id = servisniDeoString[4];
-				
+				obrisan = servisniDeoString[5];
 				
 				//
 				for (int j = 0; j < listaMarki.length; j++) {
@@ -646,7 +502,7 @@ public class Main {
 				}
 				
 				// kreiranje objekta
-				ServisniDeo servisniDeo = new ServisniDeo(marka,model,naziv,cena,id);
+				ServisniDeo servisniDeo = new ServisniDeo(marka,model,naziv,cena,id,obrisan);
 				// dodavanje servisnog dela listi servisnih delova
 				ArrayList<ServisniDeo> listaServisnihDelova = Administrator.getListaSvihDelova();
 				listaServisnihDelova.add(servisniDeo);
@@ -654,9 +510,12 @@ public class Main {
 				
 			}
 		}
+	
 		
-		
-		
+		// REZERVACIJE
+		ArrayList<String> listaRezervacija = citanje.citanjeFajla("rezervacije.txt");
+		if (listaRezervacija.size() > 0) {
+			Administrator.setListaRezervacija(listaRezervacija);
+		}
 	}
-
 }

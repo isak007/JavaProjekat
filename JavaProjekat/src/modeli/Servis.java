@@ -13,11 +13,12 @@ public class Servis {
 	private String id;
 	private double cena;
 	private String namiren;
+	private String obrisan = "ne";
 	
 	// konstruktori
 	public Servis() {};
 	public Servis(Automobil automobil, Serviser serviser, String termin, String opis,
-			ArrayList<ServisniDeo> listaDelova, StatusServisa statusServisa, String id, double cena, String namiren) {
+			ArrayList<ServisniDeo> listaDelova, StatusServisa statusServisa, String id, double cena, String namiren, String obrisan) {
 		this.automobil = automobil;
 		this.serviser = serviser;
 		this.termin = termin;
@@ -27,6 +28,7 @@ public class Servis {
 		this.id = id;
 		this.cena = cena;
 		this.namiren = namiren;
+		this.obrisan = obrisan;
 	}
 	public Servis(Servis servis) {
 		this.automobil = servis.automobil;
@@ -38,10 +40,18 @@ public class Servis {
 		this.id = servis.id;
 		this.cena = servis.cena;
 		this.namiren = servis.namiren;
+		this.obrisan = servis.obrisan;
 	}
 	
 
 	
+	//
+	public String getObrisan() {
+		return obrisan;
+	}
+	public void setObrisan(String obrisan) {
+		this.obrisan = obrisan;
+	}
 	//
 	public String getNamiren() {
 		return namiren;
@@ -123,6 +133,6 @@ public class Servis {
 	@Override
 	public String toString() {
 		return this.automobil.getId()+","+this.serviser.getId()+","+this.termin+","+this.opis+","+
-	this.getSifreDelova()+","+this.statusServisa.toString()+","+this.id+","+this.cena+","+this.namiren;
+	this.getSifreDelova()+","+this.statusServisa.toString()+","+this.id+","+this.cena+","+this.namiren+","+this.obrisan;
 	}
 }

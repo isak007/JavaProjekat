@@ -16,8 +16,8 @@ public class Serviser extends Korisnik {
 	public Serviser() {};
 	public Serviser(String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona, 
 			String korisnickoIme, String lozinka, Uloga uloga, String id, double plata,
-			Specijalizacija specijalizacija) {
-		super(ime, prezime, jmbg, pol, adresa, brojTelefona, korisnickoIme, lozinka, uloga);
+			Specijalizacija specijalizacija, String obrisan) {
+		super(ime, prezime, jmbg, pol, adresa, brojTelefona, korisnickoIme, lozinka, uloga, obrisan);
 		this.id = id;
 		this.plata = plata;
 		this.specijalizacija = specijalizacija;
@@ -72,6 +72,6 @@ public class Serviser extends Korisnik {
 	@Override
 	public String toString() {
 		return this.ime+","+this.prezime+","+this.jmbg +","+this.pol+","+this.adresa+","+this.brojTelefona+
-				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.id+","+this.plata+","+this.specijalizacija;
+				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.id+","+this.plata+","+this.specijalizacija+","+this.obrisan;
 	}
 }
