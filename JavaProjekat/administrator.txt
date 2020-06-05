@@ -1,1 +1,0 @@
-Isak,Vujovic,1602000230026,MUSKO,Rakite 1/1,067222,korisnickoIme,lozinka,ADMINISTRATOR,123,500.0

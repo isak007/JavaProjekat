@@ -55,7 +55,8 @@ public class CitanjePisanje {
 			return(lista);
 		}
 		catch (IOException e) {	
-			e.printStackTrace();
+			//e.printStackTrace();
+			this.prazanFajl(fajl);
 			return (lista);
 		}
 		catch (NullPointerException e) {

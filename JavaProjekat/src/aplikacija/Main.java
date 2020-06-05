@@ -11,6 +11,8 @@ import enumeracije.Pol;
 import enumeracije.Specijalizacija;
 import enumeracije.StatusServisa;
 import enumeracije.Uloga;
+import funkcije.AdminFunkcije;
+import funkcije.ServiserFunkcije;
 import citanjePisanje.CitanjePisanje;
 
 public class Main {
@@ -20,11 +22,20 @@ public class Main {
 		inicijalizacijaMarkiModela();
 		
 		// TEST
+		Administrator admin = new Administrator("Isak","Vujovic","1602000230026",Pol.MUSKO,"Novi Sad","0637897898",
+				"admin","admin",Uloga.ADMINISTRATOR,"novid",300,"ne");
+		Musterija musterija = new Musterija("Isak","Vujovic","1602000230026",Pol.MUSKO,"Novi Sad","0637897898",
+				"admin","admin",Uloga.MUSTERIJA,"novid",0,"ne");
+		Serviser serviser = new Serviser("Isak","Vujovic","1602000230026",Pol.MUSKO,"Novi Sad","0637897898",
+				"admin","admin",Uloga.ADMINISTRATOR,"novid",300,Specijalizacija.LIMAR,"ne");
+		Automobil automobil = new Automobil(musterija,Marka.Audi,Model.A4,2020,120,120,Gorivo.BENZIN,"id","ne");
 		
-		
-		
-		
-		
+		AdminFunkcije afunkcije = new AdminFunkcije();
+		afunkcije.registracijaAdmina(admin);
+		afunkcije.registracijaMusterije(musterija);
+		afunkcije.registracijaServisera(serviser);
+		afunkcije.dodavanjeAutomobila(automobil);
+		afunkcije.kreiranjeServisa(automobil, "nesto", serviser, "2020-8-12 15:32", new ArrayList<ServisniDeo>(), "Id");
 	}
 	
 	public static void inicijalizacijaMarkiModela() {

@@ -7,11 +7,8 @@ import java.util.GregorianCalendar;
 
 import citanjePisanje.CitanjePisanje;
 import enumeracije.StatusServisa;
-import modeli.Administrator;
-import modeli.Automobil;
 import modeli.Servis;
 import modeli.Serviser;
-import modeli.ServisnaKnjizica;
 import modeli.ServisniDeo;
 
 public class ServiserFunkcije {
@@ -122,6 +119,8 @@ public class ServiserFunkcije {
 	
 	
 	
+	///// SVIM OVIM FUNKCIJAMA MOGU PREKO ADMIN FUNCIJA DA PRISTUPIM
+	/*
 	public void pregledRezervacija() {
 		ArrayList<String> listaRezervacija = Administrator.getListaRezervacija();
 		if (listaRezervacija.size() > 0) {
@@ -132,10 +131,10 @@ public class ServiserFunkcije {
 		else {
 			System.out.println("Trenutno nema rezervacija!");
 		}
-	}
+	}*/
 	
 	
-	
+	/*
 	public void kreiranjeServisa(String automobilID, String opis, String termin,
 			ArrayList<ServisniDeo> listaDelova, String id, String sifraServisneKnjizice) {		
 		// pronalazenje automobila koji je postavljen za servis, preko toString metode
@@ -161,7 +160,7 @@ public class ServiserFunkcije {
 					automobilObj.getModel().toString().equals(model)) {
 				listaOdgovarajucihDelova.add(listaSvihDelova.get(i));
 			}
-		}*/
+		}
 		ArrayList<Servis> listaOdredjenihServisa = serviser.getListaServisa(); // servisi odredjeni serviseru
 		ArrayList<Servis> listaServisa = Administrator.getListaSvihServisa(); // svi servisi
 		
@@ -204,10 +203,10 @@ public class ServiserFunkcije {
 		}
 		pisanje.pisanjeUfajl(servis.toString(), "servis.txt");
 		System.out.println("Servis je uspesno zakazan!");
-	}
+	}*/
 	
 	
-	
+	/*
 	public void izmenaServisa(Servis servis, String opcija, String noviSadrzaj) {
 		this.inicijalizacijaPromjena();
 		ArrayList<Servis> listaServisa = this.serviser.getListaServisa();
@@ -222,5 +221,5 @@ public class ServiserFunkcije {
 		else {
 			System.out.println("Trenutno nema zakazanih servisa!");
 		}
-	}
+	}*/
 }

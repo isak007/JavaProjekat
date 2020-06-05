@@ -18,7 +18,6 @@ public class Administrator extends Korisnik {
 	private static ArrayList<ServisniDeo> listaSvihDelova = new ArrayList<ServisniDeo>();
 	private static ArrayList<ServisnaKnjizica> listaServisnihKnjizica = new ArrayList<ServisnaKnjizica>();
 	private static HashMap<Marka, ArrayList<Model>> markeModeli;
-
 	
 	// konstruktori
 	public Administrator() {};
@@ -32,8 +31,6 @@ public class Administrator extends Korisnik {
 		this.id = administrator.id;
 		this.plata = administrator.plata;
 	}
-	
-	
 
 	
 	//

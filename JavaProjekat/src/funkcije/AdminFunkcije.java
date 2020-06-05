@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import modeli.*;
 import citanjePisanje.CitanjePisanje;
+import enumeracije.Gorivo;
 import enumeracije.Marka;
 import enumeracije.Model;
 import enumeracije.Pol;
@@ -15,7 +16,7 @@ import enumeracije.Uloga;
 public class AdminFunkcije {
 	//private Administrator admin;
 	
-	public AdminFunkcije (Administrator admin) {
+	public AdminFunkcije (/*Administrator admin*/) {
 		//this.admin = admin;
 	}
 	
@@ -46,9 +47,10 @@ public class AdminFunkcije {
 	}
 	
 	
-	public void dodavanjeServisnogDela(Marka marka, Model model, String naziv, double cena, String id, boolean dodajSimetricni) {
+	public void dodavanjeServisnogDela(ServisniDeo servisniDeo, boolean dodajSimetricni) {
 		String suprotnaStrana = "";
 		String strana = "";
+		String naziv = servisniDeo.getNaziv();
 		// simetricni deo
 		boolean mogucSimetricni = false;
 		if(naziv.contains("Desna strana") || naziv.contains("desna strana") ||
@@ -77,10 +79,10 @@ public class AdminFunkcije {
 		ArrayList<ServisniDeo> listaServisnihDelova = Administrator.getListaSvihDelova();
 		CitanjePisanje pisanje = new CitanjePisanje();
 		// kreiranje objekta
-		ServisniDeo servisniDeo = new ServisniDeo(marka,model,naziv,cena,id,"ne");
 		if (mogucSimetricni) {
 			String noviNaziv = naziv.replace(strana, suprotnaStrana);
-			ServisniDeo servisniDeoSimetricni = new ServisniDeo(marka,model,noviNaziv,cena,id+"s","ne");
+			ServisniDeo servisniDeoSimetricni = new ServisniDeo(servisniDeo.getMarka(),servisniDeo.getModel(),noviNaziv,
+					servisniDeo.getCena(),servisniDeo.getId()+"s","ne");
 			listaServisnihDelova.add(servisniDeoSimetricni);
 			pisanje.pisanjeUfajl(servisniDeoSimetricni.toString(), "servisniDelovi.txt");
 		}
@@ -95,12 +97,8 @@ public class AdminFunkcije {
 	
 
 	// registracija MUSTERIJE
-	public void registracijaMusterije(String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona,
-			String korisnickoIme, String lozinka, Uloga uloga, String id) {
+	public void registracijaMusterije(Musterija korisnik) {
 		ArrayList<Musterija> listaMusterija = Administrator.getListaMusterija();
-		int brojSakupljenihBodova = 0;
-		Musterija korisnik = new Musterija(ime,prezime,jmbg,pol,adresa,brojTelefona,korisnickoIme,
-				lozinka,uloga,id,brojSakupljenihBodova,"ne");
 		listaMusterija.add(korisnik);
 		Administrator.setListaMusterija(listaMusterija);
 		CitanjePisanje pisanje = new CitanjePisanje();
@@ -108,12 +106,8 @@ public class AdminFunkcije {
 	}
 			
 	// registracija SERVISERA
-	public void registracijaServisera(String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona,
-			String korisnickoIme, String lozinka, Uloga uloga, String id, double plata, Specijalizacija specijalizacija) {
-			
+	public void registracijaServisera(Serviser korisnik) {
 		ArrayList<Serviser> listaServisera = Administrator.getListaServisera();
-		Serviser korisnik = new Serviser(ime,prezime,jmbg,pol,adresa,brojTelefona,korisnickoIme,
-				lozinka,uloga,id,plata,specijalizacija,"ne");
 		listaServisera.add(korisnik);
 		Administrator.setListaServisera(listaServisera);
 		CitanjePisanje pisanje = new CitanjePisanje();
@@ -121,13 +115,8 @@ public class AdminFunkcije {
 	}
 	
 	// registracija ADMINA
-	public void registracijaAdmina(String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona,
-			String korisnickoIme, String lozinka, Uloga uloga, String id, double plata) {
-		uloga = Uloga.ADMINISTRATOR;
-		
+	public void registracijaAdmina(Administrator korisnik) {
 		ArrayList<Administrator> listaAdministratora = Administrator.getListaAdministratora();
-		Administrator korisnik = new Administrator(ime,prezime,jmbg,pol,adresa,brojTelefona,korisnickoIme,
-				lozinka,uloga,id,plata,"ne");
 		listaAdministratora.add(korisnik);
 		Administrator.setListaAdministratora(listaAdministratora);
 		CitanjePisanje pisanje = new CitanjePisanje();
@@ -151,7 +140,9 @@ public class AdminFunkcije {
 		ArrayList<Servis> listaSvihServisa = Administrator.getListaSvihServisa();
 		if(listaSvihServisa.size() > 0) {
 			for (int i = 0; i < listaSvihServisa.size(); i++) {
-				System.out.println(i+") "+listaSvihServisa.get(i).toString());
+				if (listaSvihServisa.get(i).getObrisan().equals("ne")) {
+					System.out.println(i+") "+listaSvihServisa.get(i).toString());
+				}
 			}
 		}
 		else {
@@ -159,21 +150,11 @@ public class AdminFunkcije {
 		}
 	}
 	
-	public void kreiranjeServisa(String automobilID, String opis, Serviser serviser, String termin,
-			ArrayList<ServisniDeo> listaDelova, String id, String sifraServisneKnjizice) {
+	public void kreiranjeServisa(Automobil automobilObj, String opis, Serviser serviser, String termin,
+			ArrayList<ServisniDeo> listaDelova, String id) {
 		ArrayList<Serviser> listaServisera = Administrator.getListaServisera();
 		
 		if(listaServisera.size() > 0) {	
-			// pronalazenje automobila koji je postavljen za servis, preko toString metode
-			ArrayList<Automobil> listaAutomobila = Administrator.getListaAutomobila();
-			Automobil automobilObj = null;
-			for (int i = 0; i < listaAutomobila.size(); i++) {
-				if (listaAutomobila.get(i).getId().equals(automobilID)) {
-					automobilObj = listaAutomobila.get(i);
-					break;
-				}
-			}
-			
 			/*
 			// dodavanje delova za servis
 			ArrayList<ServisniDeo> listaOdgovarajucihDelova = new ArrayList<ServisniDeo>();
@@ -207,26 +188,30 @@ public class AdminFunkcije {
 			Administrator.setListaSvihServisa(listaServisa);
 			// SERVISNA KNJIZICA
 			ArrayList<ServisnaKnjizica> listaServisnihKnjizica = Administrator.getListaServisnihKnjizica();
-			if (!sifraServisneKnjizice.equals("")) {
-				for (int i = 0; i < listaServisnihKnjizica.size(); i++) {
-					// dodavanje servisa u servisnoj knjzici ako postoji servisna knjizica
-					if (listaServisnihKnjizica.get(i).getAutomobil().getId().equals(automobilObj.getId())) {
-						ArrayList<Servis> servisiKnjizice = listaServisnihKnjizica.get(i).getListaServisa();
-						servisiKnjizice.add(servis);
-						listaServisnihKnjizica.get(i).setListaServisa(servisiKnjizice);
-						break;
-					}
+			boolean postojiKnjizica = false;
+			ServisnaKnjizica servisnaKnjizica = null;
+			for (ServisnaKnjizica sk : listaServisnihKnjizica) {
+				if (sk.getAutomobil().equals(automobilObj)){
+					postojiKnjizica = true;
+					servisnaKnjizica = sk;
+					break;
 				}
+			}
+			if (postojiKnjizica) {
+				// dodavanje servisa u servisnoj knjzici ako postoji servisna knjizica
+				ArrayList<Servis> servisiKnjizice = servisnaKnjizica.getListaServisa();
+				servisiKnjizice.add(servis);
+				servisnaKnjizica.setListaServisa(servisiKnjizice);
 			}
 			// dodavanje nove servisne knjizice ako ne postoji i servisa
 			else {
 				ArrayList <Servis> servisiKnjizice = new ArrayList<Servis>();
 				servisiKnjizice.add(servis);
-				ServisnaKnjizica servisnaKnjizica = new ServisnaKnjizica(automobilObj,servisiKnjizice, id,"ne");
-				listaServisnihKnjizica.add(servisnaKnjizica);
-				Administrator.setListaServisnihKnjizica(listaServisnihKnjizica);
-				pisanje.pisanjeUfajl(servisnaKnjizica.toString(), "servisnaKnjizica.txt");
+				ServisnaKnjizica novaServisnaKnjizica = new ServisnaKnjizica(automobilObj,servisiKnjizice, id,"ne");
+				pisanje.pisanjeUfajl(novaServisnaKnjizica.toString(), "servisnaKnjizica.txt");
 			}
+			listaServisnihKnjizica.add(servisnaKnjizica);
+			Administrator.setListaServisnihKnjizica(listaServisnihKnjizica);
 			
 			pisanje.pisanjeUfajl(servis.toString(), "servis.txt");
 			System.out.println("Servis je uspesno zakazan!");
@@ -251,4 +236,137 @@ public class AdminFunkcije {
 			System.out.println("Trenutno nema zakazanih servisa!");
 		}
 	}
+	
+	
+	///////////////////////////////////////////////////
+	
+	// CRUD korisnik
+	public void izmenaMusterije(Musterija musterija, String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona,
+			String korisnickoIme, String lozinka, Uloga uloga, int brojSakupljenihBodova) {
+			musterija.setIme(ime);
+			musterija.setPrezime(prezime);
+			musterija.setJmbg(jmbg);
+			musterija.setPol(pol);
+			musterija.setAdresa(adresa);
+			musterija.setBrojTelefona(brojTelefona);
+			musterija.setKorisinickoIme(korisnickoIme);
+			musterija.setLozinka(lozinka);
+			musterija.setBrojSakupljenihBodova(brojSakupljenihBodova);
+	}
+	public void izmenaServisera(Serviser serviser, String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona,
+			String korisnickoIme, String lozinka, Uloga uloga, double plata, Specijalizacija specijalizacija) {
+			serviser.setIme(ime);
+			serviser.setPrezime(prezime);
+			serviser.setJmbg(jmbg);
+			serviser.setPol(pol);
+			serviser.setAdresa(adresa);
+			serviser.setBrojTelefona(brojTelefona);
+			serviser.setKorisinickoIme(korisnickoIme);
+			serviser.setLozinka(lozinka);
+			serviser.setPlata(plata);
+			serviser.setSpecijalizacija(specijalizacija);
+	}
+	public void izmenaAdmina(Administrator admin, String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona,
+			String korisnickoIme, String lozinka, Uloga uloga, double plata) {
+			admin.setIme(ime);
+			admin.setPrezime(prezime);
+			admin.setJmbg(jmbg);
+			admin.setPol(pol);
+			admin.setAdresa(adresa);
+			admin.setBrojTelefona(brojTelefona);
+			admin.setKorisinickoIme(korisnickoIme);
+			admin.setLozinka(lozinka);
+			admin.setPlata(plata);
+		
+	}
+	public void brisanjeMusterije(Musterija musterija) {
+		musterija.setObrisan("da");
+		for (Automobil automobil : musterija.getListaAutomobila()) {
+			automobil.setObrisan("da");
+		}
+		for (Servis servis : musterija.getListaSvihServisa()) {
+			servis.setObrisan("da");
+		}
+	}
+	public void brisanjeServisera(Serviser serviser) {
+		serviser.setObrisan("da");
+		for (Servis servis : serviser.getListaServisa()) {
+			servis.setObrisan("da");
+		}
+	}
+	public void brisanjeAdmina(Administrator admin) {
+		admin.setObrisan("da");
+	}
+	
+	// CRUD automobil
+	public void dodavanjeAutomobila(Automobil automobil) {
+		ArrayList<Automobil> listaAutomobila = Administrator.getListaAutomobila();
+		// dodavanje automobila musterijinoj listi automobila
+		ArrayList<Automobil> listaOdredjenihAutomobila = automobil.getVlasnik().getListaAutomobila();
+		listaOdredjenihAutomobila.add(automobil);
+		automobil.getVlasnik().setListaAutomobila(listaOdredjenihAutomobila);
+		// dodavanje automobila celoj listi automobila
+		listaAutomobila.add(automobil);
+		Administrator.setListaAutomobila(listaAutomobila);
+		
+		
+		// upisivanje automobila u fajl
+		CitanjePisanje pisanje = new CitanjePisanje();
+		pisanje.pisanjeUfajl(automobil.toString(), "automobil.txt");
+		System.out.println("Uspesno ste uneli automobil!"); 
+		
+		
+	}
+	public void izmenaAutomobila(Automobil automobil, Musterija vlasnik, Marka marka, Model model, int godinaProizvodnje,
+			double zapreminaMotora, int snagaMotora, Gorivo gorivo) {
+		automobil.setMarka(marka);
+		automobil.setModel(model);
+		automobil.setGodinaProizvodnje(godinaProizvodnje);
+		automobil.setZapreminaMotora(zapreminaMotora);
+		automobil.setSnagaMotora(snagaMotora);
+		automobil.setGorivo(gorivo);
+		if(automobil.getVlasnik() != vlasnik) {
+			// uklanjanje iz liste starog vlasnika
+			ArrayList<Automobil> novaListaStarogVlasnika = automobil.getVlasnik().getListaAutomobila();
+			novaListaStarogVlasnika.remove(novaListaStarogVlasnika.indexOf(automobil));
+			automobil.getVlasnik().setListaAutomobila(novaListaStarogVlasnika);
+			// dodavanje automobila listi novog vlasnika
+			ArrayList<Automobil> novaListaNovogVlasnika = vlasnik.getListaAutomobila();
+			novaListaNovogVlasnika.add(automobil);
+			vlasnik.setListaAutomobila(novaListaNovogVlasnika);
+			automobil.setVlasnik(vlasnik);
+		}
+		
+	}
+	public void brisanjeAutomobila(Automobil automobil) {
+		automobil.setObrisan("da");
+	}
+	
+	// CRUD servis
+	public void brisanjeServisa(Servis servis) {
+		servis.setObrisan("da");
+	}
+	
+	// CRUD servisni deo
+	public void brisanjeSDela(ServisniDeo servisniDeo) {
+		servisniDeo.setObrisan("da");
+	}
+	
+	// CRUD servisna knjizica
+	public void dodavanjeServisneKnjizice(Automobil automobil, String id) {
+		ArrayList<ServisnaKnjizica> listaServisnihKnjizica = Administrator.getListaServisnihKnjizica();
+		ServisnaKnjizica servisnaKnjizica = new ServisnaKnjizica(automobil,new ArrayList<Servis>(), id,"ne");
+		listaServisnihKnjizica.add(servisnaKnjizica);
+		Administrator.setListaServisnihKnjizica(listaServisnihKnjizica);
+	}
+	public void izmenaServisneKnjizice(ServisnaKnjizica sk, Automobil automobil, ArrayList <Servis> servisiKnjizice) {
+		sk.setAutomobil(automobil);
+		sk.setListaServisa(servisiKnjizice);
+	}
+	public void brisanjeServisneKnjizice(ServisnaKnjizica servisnaKnjizica) {
+		servisnaKnjizica.setObrisan("da");
+	}
+	
+	/////////////////////////////////////////////
+	
 }
