@@ -36,7 +36,7 @@ public class ServisnaKnjizica {
 	//
 	public String getSifreServisa() {
 		sifreServisa = "";
-		if(listaServisa.size() > 0) {
+		if (listaServisa.size() > 0) {
 			for (int i = 0; i < listaServisa.size(); i++) {
 				sifreServisa += listaServisa.get(i).getId() + ".";
 			}
@@ -71,6 +71,6 @@ public class ServisnaKnjizica {
 	
 	@Override
 	public String toString() {
-		return this.automobil.getId()+","+this.getSifreServisa()+","+this.id+","+this.obrisan;
+		return this.id+","+this.getSifreServisa()+","+this.automobil.getId()+","+this.obrisan;
 	}
 }

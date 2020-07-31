@@ -7,8 +7,11 @@ import java.util.GregorianCalendar;
 
 import citanjePisanje.CitanjePisanje;
 import enumeracije.StatusServisa;
+import modeli.Administrator;
+import modeli.Automobil;
 import modeli.Servis;
 import modeli.Serviser;
+import modeli.ServisnaKnjizica;
 import modeli.ServisniDeo;
 
 public class ServiserFunkcije {
@@ -18,15 +21,25 @@ public class ServiserFunkcije {
 		this.serviser = serviser;
 	}
 	
+	// serviser getter i setter
+	public Serviser getServiser() {
+		return serviser;
+	}
+
+	public void setServiser(Serviser serviser) {
+		this.serviser = serviser;
+	}
+
+
+
 	public void zavrsiServis(Servis servis, double cena) {
 		if (this.serviser.getListaNezavrsenihServisa().size() > 0) {
 			this.inicijalizacijaPromjena();
 			ArrayList<Servis> listaNezavrsenihServisa = this.serviser.getListaNezavrsenihServisa();
 			servis.setStatusServisa(StatusServisa.ZAVRSEN);
 			// modifikovanje tesktualnog fajla servisa 
-			CitanjePisanje citanjePisanje = new CitanjePisanje();
-			ArrayList<String> listaServisaString = citanjePisanje.citanjeFajla("servis.txt");
-			citanjePisanje.prazanFajl("servis.txt");
+			ArrayList<String> listaServisaString = CitanjePisanje.citanjeFajla("servis.txt");
+			CitanjePisanje.prazanFajl("servis.txt");
 			String [] servisString;
 			String noviSadrzaj = "";
 			for (int i = 0; i < listaServisaString.size(); i++) {
@@ -43,7 +56,7 @@ public class ServiserFunkcije {
 				noviSadrzaj += "\r\n";
 			}
 			noviSadrzaj = noviSadrzaj.substring(0, noviSadrzaj.length()-2);
-			citanjePisanje.pisanjeUfajl(noviSadrzaj, "servis.txt");
+			CitanjePisanje.pisanjeUfajl(noviSadrzaj, "servis.txt");
 			// dodavanje cene svakog dela ukupnog ceni
 			ArrayList<ServisniDeo> listaDelova = servis.getListaDelova();
 			for (int j = 0; j < listaDelova.size(); j++) {
@@ -89,11 +102,7 @@ public class ServiserFunkcije {
 				try {
 					termin.setTime(format.parse(datumString));
 					if (sad.after(termin)) {
-						ArrayList<Servis> listaNezavrsenihServisa = this.serviser.getListaNezavrsenihServisa();
-						if (!listaNezavrsenihServisa.contains(listaServisa.get(i)) && 
-								listaServisa.get(i).getStatusServisa().toString().equals("ZAKAZAN")) {
-							listaNezavrsenihServisa.add(listaServisa.get(i));
-						}
+						listaServisa.get(i).setStatusServisa(StatusServisa.U_TOKU);
 					}
 				}
 				catch(ParseException e) {
@@ -134,14 +143,12 @@ public class ServiserFunkcije {
 	}*/
 	
 	
-	/*
-	public void kreiranjeServisa(String automobilID, String opis, String termin,
-			ArrayList<ServisniDeo> listaDelova, String id, String sifraServisneKnjizice) {		
+	public void kreiranjeServisa(Servis servis) {		
 		// pronalazenje automobila koji je postavljen za servis, preko toString metode
 		ArrayList<Automobil> listaAutomobila = Administrator.getListaAutomobila();
 		Automobil automobilObj = null;
 		for (int i = 0; i < listaAutomobila.size(); i++) {
-			if (listaAutomobila.get(i).getId().toString().equals(automobilID)) {
+			if (listaAutomobila.get(i).getId().toString().equals(servis.getAutomobil().getId())) {
 				automobilObj = listaAutomobila.get(i);
 				break;
 			}
@@ -149,7 +156,6 @@ public class ServiserFunkcije {
 		
 		Serviser serviser = this.serviser;
 		
-		/*
 		// dodavanje delova za servis
 		ArrayList<ServisniDeo> listaOdgovarajucihDelova = new ArrayList<ServisniDeo>();
 		ArrayList<ServisniDeo> listaSvihDelova = Administrator.getListaSvihDelova();
@@ -164,8 +170,6 @@ public class ServiserFunkcije {
 		ArrayList<Servis> listaOdredjenihServisa = serviser.getListaServisa(); // servisi odredjeni serviseru
 		ArrayList<Servis> listaServisa = Administrator.getListaSvihServisa(); // svi servisi
 		
-		CitanjePisanje pisanje = new CitanjePisanje();
-		Servis servis = new Servis(automobilObj, serviser, termin, opis, listaDelova, StatusServisa.ZAKAZAN, id, 0, "ne","ne");
 		// dodavanje servisa musteriji
 		ArrayList<Servis> listaMServisa = automobilObj.getVlasnik().getListaSvihServisa();
 		ArrayList<Servis> listaZakazanihMServisa = automobilObj.getVlasnik().getListaZakazanihServisa();
@@ -180,46 +184,32 @@ public class ServiserFunkcije {
 		listaServisa.add(servis);
 		Administrator.setListaSvihServisa(listaServisa);
 		// SERVISNA KNJIZICA
-		ArrayList<ServisnaKnjizica> listaServisnihKnjizica = Administrator.getListaServisnihKnjizica();
-		if (!sifraServisneKnjizice.equals("")) {
-			for (int i = 0; i < listaServisnihKnjizica.size(); i++) {
-				// dodavanje servisa u servisnoj knjzici ako postoji servisna knjizica
-				if (listaServisnihKnjizica.get(i).getAutomobil().getId().equals(automobilObj.getId())) {
-					ArrayList<Servis> servisiKnjizice = listaServisnihKnjizica.get(i).getListaServisa();
-					servisiKnjizice.add(servis);
-					listaServisnihKnjizica.get(i).setListaServisa(servisiKnjizice);
-					break;
-				}
+		boolean postojiKnjizica = false;
+		ServisnaKnjizica servisnaKnjizica = null;
+		for (ServisnaKnjizica sk : Administrator.getListaServisnihKnjizica()) {
+			if (sk.getAutomobil().equals(servis.getAutomobil())){
+				postojiKnjizica = true;
+				servisnaKnjizica = sk;
+				break;
 			}
+		}
+		// dodavanje servisa u servisnoj knjzici ako postoji servisna knjizica
+		if (postojiKnjizica) {
+			ArrayList<Servis> servisiKnjizice = servisnaKnjizica.getListaServisa();
+			servisiKnjizice.add(servis);
+			servisnaKnjizica.setListaServisa(servisiKnjizice);
 		}
 		// dodavanje nove servisne knjizice ako ne postoji i servisa
 		else {
 			ArrayList <Servis> servisiKnjizice = new ArrayList<Servis>();
 			servisiKnjizice.add(servis);
-			ServisnaKnjizica servisnaKnjizica = new ServisnaKnjizica(automobilObj,servisiKnjizice, id, "ne");
-			listaServisnihKnjizica.add(servisnaKnjizica);
-			Administrator.setListaServisnihKnjizica(listaServisnihKnjizica);
-			pisanje.pisanjeUfajl(servisnaKnjizica.toString(), "servisnaKnjizica.txt");
+			ServisnaKnjizica novaServisnaKnjizica = new ServisnaKnjizica(servis.getAutomobil(),servisiKnjizice, servis.getAutomobil().getId(),"ne");
+			AdminFunkcije af = new AdminFunkcije(null);
+			af.dodajUkloniSK(novaServisnaKnjizica, "dodaj");
 		}
-		pisanje.pisanjeUfajl(servis.toString(), "servis.txt");
+		CitanjePisanje.izmenaPodataka(CitanjePisanje.skZaUpis(), "servisnaKnjizica.txt");
+		CitanjePisanje.izmenaPodataka(CitanjePisanje.servisZaUpis(), "servis.txt");
 		System.out.println("Servis je uspesno zakazan!");
-	}*/
+	}
 	
-	
-	/*
-	public void izmenaServisa(Servis servis, String opcija, String noviSadrzaj) {
-		this.inicijalizacijaPromjena();
-		ArrayList<Servis> listaServisa = this.serviser.getListaServisa();
-		if(listaServisa.size() > 0) {
-			if (opcija.equals("1")) {
-				servis.setOpis(noviSadrzaj);
-			}
-			else if(opcija.equals("2")) {
-				servis.setCena(Integer.parseInt(noviSadrzaj));
-			}
-		}
-		else {
-			System.out.println("Trenutno nema zakazanih servisa!");
-		}
-	}*/
 }

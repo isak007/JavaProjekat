@@ -12,13 +12,13 @@ public class Servis {
 	private StatusServisa statusServisa;
 	private String id;
 	private double cena;
-	private String namiren;
+	private String otplacen;
 	private String obrisan = "ne";
 	
 	// konstruktori
 	public Servis() {};
 	public Servis(Automobil automobil, Serviser serviser, String termin, String opis,
-			ArrayList<ServisniDeo> listaDelova, StatusServisa statusServisa, String id, double cena, String namiren, String obrisan) {
+			ArrayList<ServisniDeo> listaDelova, StatusServisa statusServisa, String id, double cena, String otplacen, String obrisan) {
 		this.automobil = automobil;
 		this.serviser = serviser;
 		this.termin = termin;
@@ -27,7 +27,7 @@ public class Servis {
 		this.statusServisa = statusServisa;
 		this.id = id;
 		this.cena = cena;
-		this.namiren = namiren;
+		this.otplacen = otplacen;
 		this.obrisan = obrisan;
 	}
 	public Servis(Servis servis) {
@@ -39,7 +39,7 @@ public class Servis {
 		this.statusServisa = servis.statusServisa;
 		this.id = servis.id;
 		this.cena = servis.cena;
-		this.namiren = servis.namiren;
+		this.otplacen = servis.otplacen;
 		this.obrisan = servis.obrisan;
 	}
 	
@@ -53,11 +53,11 @@ public class Servis {
 		this.obrisan = obrisan;
 	}
 	//
-	public String getNamiren() {
-		return namiren;
+	public String getOtplacen() {
+		return otplacen;
 	}
-	public void setNamiren(String namiren) {
-		this.namiren = namiren;
+	public void setOtplacen(String otplacen) {
+		this.otplacen = otplacen;
 	}
 	//
 	public double getCena() {
@@ -132,7 +132,8 @@ public class Servis {
 
 	@Override
 	public String toString() {
-		return this.automobil.getId()+","+this.serviser.getId()+","+this.termin+","+this.opis+","+
-	this.getSifreDelova()+","+this.statusServisa.toString()+","+this.id+","+this.cena+","+this.namiren+","+this.obrisan;
+		return this.id+","+this.serviser.getId()+","+this.termin+","+this.opis+","+
+	this.getSifreDelova()+","+this.statusServisa.toString()+","+this.automobil.getId()+","+
+				this.cena+","+this.otplacen+","+this.obrisan;
 	}
 }

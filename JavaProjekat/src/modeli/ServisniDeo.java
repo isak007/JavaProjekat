@@ -75,6 +75,6 @@ public class ServisniDeo {
 	
 	@Override
 	public String toString() {
-		return this.marka.toString()+","+this.model.toString()+","+this.naziv+","+this.cena+","+this.id+","+this.obrisan;
+		return this.id+","+this.model.toString()+","+this.naziv+","+this.cena+","+this.marka.toString()+","+this.obrisan;
 	}
 }

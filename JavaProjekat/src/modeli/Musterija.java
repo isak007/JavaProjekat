@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Musterija extends Korisnik {
 	private String id;
 	private int brojSakupljenihBodova;
+	private double dug;
 	private ArrayList<Automobil> listaAutomobila = new ArrayList<Automobil>();
 	private ArrayList<Servis> listaSvihServisa = new ArrayList<Servis>();
 	private ArrayList<Servis> listaZakazanihServisa = new ArrayList<Servis>();
@@ -15,18 +16,28 @@ public class Musterija extends Korisnik {
 	// konstruktori
 	public Musterija() {};
 	public Musterija(String ime, String prezime, String jmbg, Pol pol, String adresa, String brojTelefona, 
-			String korisnickoIme, String lozinka, Uloga uloga, String id, int brojSakupljenihBodova, String obrisan) {
+			String korisnickoIme, String lozinka, Uloga uloga, String id, int brojSakupljenihBodova,double dug, String obrisan) {
 		super(ime, prezime, jmbg, pol, adresa, brojTelefona, korisnickoIme, lozinka, uloga, obrisan);
 		this.id = id;
 		this.brojSakupljenihBodova = brojSakupljenihBodova;
+		this.dug = dug;
 	}
 	public Musterija(Musterija musterija) {
 		this.id = musterija.id;
 		this.brojSakupljenihBodova = musterija.brojSakupljenihBodova;
+		this.dug = musterija.dug;
 	}
 	
 	
 	
+	
+	//
+	public double getDug() {
+		return dug;
+	}
+	public void setDug(double dug) {
+		this.dug = dug;
+	}
 	//
 	public ArrayList<Servis> getListaZavrsenihServisa() {
 		return listaZavrsenihServisa;
@@ -73,8 +84,9 @@ public class Musterija extends Korisnik {
 	
 	@Override
 	public String toString() {
-		return this.ime+","+this.prezime+","+this.jmbg +","+this.pol+","+this.adresa+","+this.brojTelefona+
-				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.id+","+this.brojSakupljenihBodova+","+this.obrisan;
+		return this.id+"," +this.prezime+","+this.jmbg +","+this.pol+","+this.adresa+","+this.brojTelefona+
+				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.ime+","+this.brojSakupljenihBodova+
+				","+this.dug+","+this.obrisan;
 	}
 	
 }

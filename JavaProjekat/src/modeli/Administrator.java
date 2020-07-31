@@ -114,7 +114,7 @@ public class Administrator extends Korisnik {
 	
 	@Override
 	public String toString() {
-		return this.ime+","+this.prezime+","+this.jmbg +","+this.pol+","+this.adresa+","+this.brojTelefona+
-				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.id+","+this.plata+","+this.obrisan;
+		return this.id+","+this.prezime+","+this.jmbg +","+this.pol+","+this.adresa+","+this.brojTelefona+
+				","+this.korisinickoIme+","+this.lozinka+","+this.uloga+","+this.ime+","+this.plata+","+this.obrisan;
 	}
 }

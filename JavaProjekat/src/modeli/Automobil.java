@@ -109,7 +109,8 @@ public class Automobil {
 	
 	@Override
 	public String toString() {
-		return this.vlasnik.getId()+","+this.marka.toString()+","+this.model.toString()+","+
-				this.godinaProizvodnje+","+this.zapreminaMotora+","+this.snagaMotora+","+this.gorivo.toString()+","+this.id+","+this.obrisan;
+		return this.id+","+this.marka.toString()+","+this.model.toString()+","+
+				this.godinaProizvodnje+","+this.zapreminaMotora+","+
+				this.snagaMotora+","+this.gorivo.toString()+","+this.vlasnik.getId()+","+this.obrisan;
 	}
 }

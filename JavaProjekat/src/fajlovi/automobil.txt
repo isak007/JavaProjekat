@@ -1,0 +1,1 @@
+1234,Opel,Astra,2020,123.0,123,BENZIN,noviid,ne
