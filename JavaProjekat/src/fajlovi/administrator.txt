@@ -1,1 +1,1 @@
-novid,Vujovic,1602000230026,MUSKO,Novi Sad,0637897898,admin,admin,ADMINISTRATOR,admin123,300.0,ne
+novid,Markovic,1234567891011,MUSKO,Novi Sad,063567765,admin,admin,ADMINISTRATOR,Marko,300.0,ne
